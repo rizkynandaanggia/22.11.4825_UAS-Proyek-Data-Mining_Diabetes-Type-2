@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediktor Risiko Diabetes Tipe 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800">
+
+    <header class="bg-blue-600 text-white shadow-lg w-full">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <svg class="w-10 h-10 text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold">Klasifikasi Diabetes Tipe 2</h1>
+                    <p class="text-sm text-blue-200 mt-1">Gunakan AI untuk memprediksi kemungkinan diabetes berdasarkan data klinis dan gaya hidup</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto p-4 md:p-8">
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-md w-full max-w-4xl mx-auto">
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-700">Prediktor Risiko Diabetes</h2>
+                <p class="text-gray-500 mt-1">Masukkan data klinis dan gaya hidup untuk mendapatkan prediksi.</p>
+            </div>
+
+            <form action="/predict" method="post" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                
+                <div>
+                    <label for="FastingBloodSugar" class="block text-sm font-medium text-gray-600">Gula Darah Puasa (mg/dL)</label>
+                    <input type="number" step="any" min="0" name="FastingBloodSugar" value="{{ form_data.FastingBloodSugar if form_data }}" placeholder="Contoh: 90.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div>
+                    <label for="HbA1c" class="block text-sm font-medium text-gray-600">Kadar HbA1c (%)</label>
+                    <input type="number" step="any" min="0" name="HbA1c" value="{{ form_data.HbA1c if form_data }}" placeholder="Contoh: 5.7" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div>
+                    <label for="SleepQuality" class="block text-sm font-medium text-gray-600">Kualitas Tidur (1-10)</label>
+                    <input type="number" step="any" min="0" max="10" name="SleepQuality" value="{{ form_data.SleepQuality if form_data }}" placeholder="Contoh: 8.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="CholesterolHDL" class="block text-sm font-medium text-gray-600">Kolesterol HDL (mg/dL)</label>
+                    <input type="number" step="any" min="0" name="CholesterolHDL" value="{{ form_data.CholesterolHDL if form_data }}" placeholder="Contoh: 40.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="FatigueLevels" class="block text-sm font-medium text-gray-600">Tingkat Kelelahan (1-10)</label>
+                    <input type="number" step="any" min="0" max="10" name="FatigueLevels" value="{{ form_data.FatigueLevels if form_data }}" placeholder="Contoh: 3.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div>
+                    <label for="CholesterolLDL" class="block text-sm font-medium text-gray-600">Kolesterol LDL (mg/dL)</label>
+                    <input type="number" step="any" min="0" name="CholesterolLDL" value="{{ form_data.CholesterolLDL if form_data }}" placeholder="Contoh: 100.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="MedicationAdherence" class="block text-sm font-medium text-gray-600">Kepatuhan Minum Obat (1-10)</label>
+                    <input type="number" step="any" min="0" max="10" name="MedicationAdherence" value="{{ form_data.MedicationAdherence if form_data }}" placeholder="Contoh: 9.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="QualityOfLifeScore" class="block text-sm font-medium text-gray-600">Skor Kualitas Hidup (0-100)</label>
+                    <input type="number" step="any" min="0" max="100" name="QualityOfLifeScore" value="{{ form_data.QualityOfLifeScore if form_data }}" placeholder="Contoh: 75.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="DiastolicBP" class="block text-sm font-medium text-gray-600">Tekanan Darah Diastolik (mmHg)</label>
+                    <input type="number" step="any" min="0" name="DiastolicBP" value="{{ form_data.DiastolicBP if form_data }}" placeholder="Contoh: 80.0" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="Age" class="block text-sm font-medium text-gray-600">Usia (Tahun)</label>
+                    <input type="number" min="0" max="100" name="Age" value="{{ form_data.Age if form_data }}" placeholder="Contoh: 45" required class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div class="md:col-span-2 text-center mt-4">
+                    <button type="submit" class="w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+                        Dapatkan Prediksi
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-6">
+                <div class="bg-gray-50 p-4 rounded-lg text-center text-gray-600">
+                    {% if prediction_result %}
+                        <p class="font-semibold text-base
+                            {% if result_class == 'positive' %} text-red-700
+                            {% elif result_class == 'negative' %} text-green-700
+                            {% else %} text-yellow-800
+                            {% endif %}
+                        ">
+                            {{ prediction_result }}
+                        </p>
+                    {% else %}
+                        <p class="text-gray-500">Output Hasil Prediksi Akan Muncul di Sini</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer class="bg-white py-4 mt-8 border-t border-gray-200">
+        <div class="container mx-auto text-center text-sm text-gray-600">
+            <p>&copy; 2025 - Dibuat untuk Proyek Data Mining oleh Rizky Nanda Anggia (22.11.4825)</p>
+            <p class="mt-1">Universitas AMIKOM Yogyakarta</p>
+        </div>
+    </footer>
+
+</body>
+</html>
